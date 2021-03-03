@@ -1,16 +1,20 @@
 package com.feature.permision.model;
 
+import javax.persistence.*;
 
+@Entity
+@Table(name = "FEATURE")
 public class Feature {
 	
+	  @Column(name = "feature_name")
 	 private String name;
-	
+	  @Column(name = "emailId")
 	 private String emailId;
 	
-	
+	  @Column(name = "enable")
 	private boolean enable;
 	
-
+	  @Column(name = "canAccess")
 	private boolean canAccess;
 
 

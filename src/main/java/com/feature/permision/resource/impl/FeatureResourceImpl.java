@@ -10,13 +10,13 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.feature.permision.model.Feature;
 import com.feature.permision.resource.Resource;
-import com.feature.permision.service.FeatureService;
+import com.feature.permision.service.IService;
 @RestController
 @RequestMapping("/featureTest")
 public class FeatureResourceImpl implements Resource<Feature> {
 	
 	@Autowired
-	private FeatureService featureService;
+	private IService<Feature> featureService;
 	@Override
 	public ResponseEntity<Collection<Feature>> findAll() {
 		// TODO Auto-generated method stub
@@ -32,19 +32,21 @@ public class FeatureResourceImpl implements Resource<Feature> {
 	@Override
 	public ResponseEntity<Feature> save(Feature feature) {
 		// TODO Auto-generated method stub
-		return new ResponseEntity<> (featureService.save(feature),HttpStatus.CREATED);
+		return new ResponseEntity<> (featureService.saveOrUpdate(feature),HttpStatus.CREATED);
 	}
 
-	@Override
-	public ResponseEntity<Feature> update(Feature feature) {
-		// TODO Auto-generated method stub
-		return new ResponseEntity<> (featureService.update(feature),HttpStatus.OK);
-	}
+
 
 	@Override
-	public ResponseEntity<Feature> deletebyName(String val) {
+	public ResponseEntity<String> deletebyName(String val) {
 		// TODO Auto-generated method stub
 		return new ResponseEntity<> (featureService.deletebyName(val),HttpStatus.OK);
+	}
+
+	@Override
+	public ResponseEntity<Feature> update(Feature t) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

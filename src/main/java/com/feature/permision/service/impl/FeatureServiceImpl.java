@@ -4,58 +4,49 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.codehaus.jettison.json.JSONException;
+import org.codehaus.jettison.json.JSONObject;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+
 import com.feature.permision.model.Feature;
-import com.feature.permision.service.FeatureService;
+import com.feature.permision.repository.FeatureRepository;
+import com.feature.permision.service.IService;
 
 @Service
-public class FeatureServiceImpl implements FeatureService {
+public class FeatureServiceImpl implements IService<Feature> {
+	
+	@Autowired
+	private FeatureRepository featureRepository;
 
-	private String name="PersonalLoan";
-	private Map<String,Feature> featureMap = new HashMap<String, Feature>();
-	{
-		Feature feature = new Feature();
-		feature.setName("100");
-		feature.setEmailId("Megha Preeti");
-		feature.setEnable(true);
-		featureMap.put(feature.getName(), feature);
-	}
-	
-	
 	@Override
 	public Collection<Feature> findAll() {
-		// TODO Auto-generated method stub
-		return featureMap.values();
+		return featureRepository.findAll();
 	}
 
 	@Override
 	public Feature findByName(String name) {
-		// TODO Auto-generated method stub
-		return featureMap.get(name);
+		return featureRepository.findById(name).get();
 	}
 
 	@Override
-	public Feature save(Feature feature) {
-		String name_credit="CreditCard";
-		feature.setName(name_credit);
-		feature.setEmailId("Harish");
-		feature.setEnable(true);
-		featureMap.put(name_credit, feature);
-		// TODO Auto-generated method stub
-		return featureMap.get(name_credit);
+	public Feature saveOrUpdate(Feature feature) {		
+		return featureRepository.saveAndFlush(feature);
 	}
 
+	
 	@Override
-	public Feature update(Feature feature) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public Feature deletebyName(String name) {
-		// TODO Auto-generated method stub
-		return null;
+	public String deletebyName(String name) {
+		JSONObject jsonObject = new  JSONObject();	
+		try {
+			featureRepository.deleteById(name);	
+			 jsonObject.put("message", "entry deleted sucessfully");		 
+		}
+		catch(JSONException e) {
+			e.printStackTrace();
+		}
+		return jsonObject.toString();	
 	}
 
 }

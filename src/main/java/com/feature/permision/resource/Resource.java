@@ -28,5 +28,5 @@ public interface Resource<T> {
 	public ResponseEntity<T> update(@RequestBody T t) ;
 	
 	@DeleteMapping("{val}")
-	public ResponseEntity<T> deletebyName(@PathVariable String val) ;
+	public ResponseEntity<String> deletebyName(@PathVariable String val) ;
 }
